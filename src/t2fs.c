@@ -4,6 +4,7 @@
 
 #include <string.h>
 #include "../include/t2fs.h"
+#include "../include/fsmanager.h"
 
 #define IDENTIFICACAO_GRUPO "Jeferson Ferreira Guimaraes - 262522\n" \
 "Luis Miguel Santos Batista - 265037\nVinicius Chagas Soares - 262510\n"
