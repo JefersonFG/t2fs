@@ -1,6 +1,9 @@
+# Project specifics
+
 .idea/
 cmake-build-debug/
 *.pdf
+teste/main
 
 # Prerequisites
 *.d

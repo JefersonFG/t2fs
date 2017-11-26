@@ -6,8 +6,14 @@ set(CMAKE_C_STANDARD 99)
 set(SOURCE_FILES
         include/apidisk.h
         include/t2fs.h
-        src/t2fs.c include/fsmanager.h src/fsmanager.c include/file_operations.h src/file_operations.c)
+        include/fsmanager.h
+        include/file_operations.h
+        src/t2fs.c
+        src/fsmanager.c
+        src/file_operations.c)
 
 add_library(t2fs ${SOURCE_FILES})
 target_link_libraries(t2fs lib/apidisk.o)
 set_target_properties(t2fs PROPERTIES COMPILE_FLAGS "-m32 -Wall" LINK_FLAGS "-m32 -Wall")
+
+add_subdirectory(teste)
