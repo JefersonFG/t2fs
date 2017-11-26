@@ -17,3 +17,4 @@ target_link_libraries(t2fs lib/apidisk.o)
 set_target_properties(t2fs PROPERTIES COMPILE_FLAGS "-m32 -Wall" LINK_FLAGS "-m32 -Wall")
 
 add_subdirectory(teste)
+add_subdirectory(unit_tests)
