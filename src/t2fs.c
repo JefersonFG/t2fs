@@ -4,12 +4,15 @@
 
 #include <string.h>
 #include "../include/t2fs.h"
+#include "../include/fsmanager.h"
 
 #define IDENTIFICACAO_GRUPO "Jeferson Ferreira Guimaraes - 262522\n" \
 "Luis Miguel Santos Batista - 265037\nVinicius Chagas Soares - 262510\n"
 
 int identify2 (char *name, int size) {
     int tamanho_identificacao = strlen(IDENTIFICACAO_GRUPO);
+
+    init_manager();
 
     if (size < tamanho_identificacao)
         return -1;

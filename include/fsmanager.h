@@ -6,6 +6,12 @@
 #ifndef T2FS_FSMANAGER_H
 #define T2FS_FSMANAGER_H
 
+#include "t2fs.h"
+
+struct t2fs_manager {
+    struct t2fs_superbloco superbloco;
+};
+
 /**
  * Inicializa o gerenciador do sistema de arquivos.
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
