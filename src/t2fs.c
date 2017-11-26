@@ -12,8 +12,6 @@
 int identify2 (char *name, int size) {
     int tamanho_identificacao = strlen(IDENTIFICACAO_GRUPO);
 
-    init_manager();
-
     if (size < tamanho_identificacao)
         return -1;
 
