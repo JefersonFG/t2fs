@@ -8,12 +8,19 @@
 
 #include "t2fs.h"
 
+struct t2fs_fat {
+    char *data;
+    int num_clusters;
+};
+
 struct t2fs_manager {
     struct t2fs_superbloco superbloco;
+    struct t2fs_fat fat;
 };
 
 /**
- * Inicializa o gerenciador do sistema de arquivos.
+ * Inicializa o gerenciador do sistema de arquivos, garantindo que a inicialização
+ * só execute uma vez mesmo se a função for chamada mais de uma vez.
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
 int init_manager();
