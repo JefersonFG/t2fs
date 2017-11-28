@@ -8,8 +8,10 @@
 FILE2 getNewHandle(int type) {
     FILE2 handle;
     switch(type){
-        case FILE_HANDLE:
-            for(handle = 0; handle < )
+        case TYPEVAL_REGULAR:
+            for(handle = 0; handle < MAX_OPEN_FILES; handle++){
+                if ()
+            }
     }
     return 0;
 }

@@ -19,6 +19,11 @@ struct t2fs_manager {
     struct t2fs_fat fat;
 };
 
+typedef struct {
+    int valid;
+    //TODO: IMPLEMENTAR!!!
+} T_OpenFile;
+
 /**
  * Inicializa o gerenciador do sistema de arquivos, garantindo que a inicialização
  * só execute uma vez mesmo se a função for chamada mais de uma vez.

@@ -7,8 +7,11 @@
 #ifndef T2FS_FILE_OPERATIONS_H
 #define T2FS_FILE_OPERATIONS_H
 
-#define FILE_HANDLE 1
-#define DIR_HANDLE 2
+//#define FILE_HANDLE 1
+//#define DIR_HANDLE 2
+
+#define MAX_OPEN_FILES 10
+#define MAX_OPEN_DIRS 25 //foda-se
 
 //TODO Adicionar funções de manipulação de arquivos e diretórios.
 
