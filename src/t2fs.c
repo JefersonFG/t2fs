@@ -32,6 +32,8 @@ int delete2 (char *filename) {
 
 FILE2 open2 (char *filename) {
     //TODO - Implementar open2
+    init_manager();
+
     return -1;
 }
 
