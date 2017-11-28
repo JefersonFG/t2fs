@@ -10,7 +10,8 @@
 
 struct t2fs_fat {
     char *data;
-    int num_clusters;
+    unsigned int num_setores;
+    unsigned int num_clusters;
 };
 
 struct t2fs_manager {
