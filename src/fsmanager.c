@@ -5,12 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
+#include <fsmanager.h>
 
 #include "../include/t2fs.h"
 #include "../include/apidisk.h"
 #include "../include/fsmanager.h"
-
-static struct t2fs_manager fs_manager;
 
 #define MANAGER_INITIALIZED 1
 #define MANAGER_NOT_INITIALIZED 0
@@ -49,6 +49,17 @@ int init_manager() {
 
         if (init_fat() < 0)
             return -1;
+
+        fs_manager.numOpenDirectories = 0;
+        fs_manager.numOpenFiles = 0;
+
+        for (int i = 0; i < MAX_OPEN_DIRS; ++i) {
+            fs_manager.openDirectories[i].valid = -1;
+        }
+
+        for (int j = 0; j < MAX_OPEN_FILES; ++j) {
+            fs_manager.openFiles[j].valid = -1;
+        }
 
         isInitialized = MANAGER_INITIALIZED;
 
@@ -111,4 +122,20 @@ int write_fat() {
 
     free(buffer);
     return 0;
+}
+
+//TODO: Ver se isso faz algum sentido
+BYTE* readClusterData(DWORD cluster){
+    DWORD sector = cluster * (fs_manager.superbloco.SectorsPerCluster) + fs_manager.fat.num_setores + 1;
+    DWORD lastSector = sector + fs_manager.superbloco.SectorsPerCluster;
+    BYTE* buffer = (BYTE*) malloc(SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
+
+    for(sector; sector <= lastSector; ++sector){
+        if (read_sector(sector, buffer)){
+            perror("Erro ao ler o setor!\n");
+            return NULL;
+        }
+    }
+
+    return buffer;
 }

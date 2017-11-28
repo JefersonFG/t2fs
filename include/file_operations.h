@@ -23,5 +23,6 @@
  * @return -1 em caso de erro; o Handle criado caso execute corretamente
  */
 FILE2 getNewHandle(int type);
+char* getFileName(char *filename);
 
 #endif //T2FS_FILE_OPERATIONS_H

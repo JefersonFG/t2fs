@@ -32,8 +32,17 @@ int delete2 (char *filename) {
 
 FILE2 open2 (char *filename) {
     //TODO - Implementar open2
+    char* name;
+    FILE2 handle;
     init_manager();
 
+    name = getFileName(filename);
+    if (name == NULL) return -1;
+
+    handle = getNewHandle(TYPEVAL_REGULAR);
+    if (handle == NULL) return -1;
+
+    fs_manager.openFiles[handle] = openFile(parentDir, name);
     return -1;
 }
 

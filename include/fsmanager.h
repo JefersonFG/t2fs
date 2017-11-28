@@ -7,6 +7,25 @@
 #define T2FS_FSMANAGER_H
 
 #include "t2fs.h"
+#include "file_operations.h"
+
+typedef struct {
+    int valid;
+    DWORD firstCluster;
+    DWORD curPointer;
+    DWORD numBlocks;
+    DWORD byteSize;
+    char name[MAX_FILE_NAME_SIZE];
+} T_OpenFile;
+
+typedef struct {
+    int valid;
+    DWORD firstCluster;
+    DWORD curEntry;
+    DWORD numBlocks;
+    DWORD byteSize;
+    char name[MAX_FILE_NAME_SIZE];
+} T_OpenDir;
 
 struct t2fs_fat {
     char *data;
@@ -17,12 +36,14 @@ struct t2fs_fat {
 struct t2fs_manager {
     struct t2fs_superbloco superbloco;
     struct t2fs_fat fat;
+    T_OpenFile openFiles[MAX_OPEN_FILES];
+    T_OpenDir openDirectories[MAX_OPEN_DIRS];
+    int numOpenFiles;
+    int numOpenDirectories;
 };
 
-typedef struct {
-    int valid;
-    //TODO: IMPLEMENTAR!!!
-} T_OpenFile;
+static struct t2fs_manager fs_manager;
+
 
 /**
  * Inicializa o gerenciador do sistema de arquivos, garantindo que a inicialização
