@@ -67,6 +67,6 @@ int readClusterData(DWORD cluster, BYTE* data);
  * @param data Ponteiro para área de memória a ser preenchida com os dados
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
-int readFATEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data);
+int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data);
 
 #endif //T2FS_FSMANAGER_H

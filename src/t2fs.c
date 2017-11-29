@@ -33,6 +33,7 @@ int delete2 (char *filename) {
 FILE2 open2 (char *filename) {
     //TODO - Implementar open2
     char* name;
+    char* parentDir;
     FILE2 handle;
     init_manager();
 
@@ -43,7 +44,7 @@ FILE2 open2 (char *filename) {
     if (handle == NULL) return -1;
 
 //    fs_manager.openFiles[handle] = openFile(parentDir, name);
-    return -1;
+    return handle;
 }
 
 int close2 (FILE2 handle) {

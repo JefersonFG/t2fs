@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../include/t2fs.h"
 #include "../include/fsmanager.h"
 
@@ -12,6 +13,9 @@ int main() {
     printf("Identificacao do grupo:\n");
     identify2(identification, IDENTIFICATION_SIZE);
     puts(identification);
+
+    BYTE* data = malloc(1024);
+    readEntry(0,1024,data);
 
     return 0;
 }

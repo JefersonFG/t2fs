@@ -47,10 +47,8 @@ T_OpenFile getFile(DWORD cluster, char *name){
     else {
         file.valid = 1;
         file.curPointer = 0;
-//        file.numBlocks = record->blocksFileSize;
         file.byteSize = record->bytesFileSize;
         file.firstCluster = record->firstCluster;
-//        file.fatherMFT = cluster;
         strcpy(file.name, record->name);
     }
     return file;
