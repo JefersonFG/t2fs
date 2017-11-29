@@ -128,8 +128,7 @@ int write_fat() {
 int readClusterData(DWORD cluster, BYTE* data) {
     DWORD sector = cluster * (fs_manager.superbloco.SectorsPerCluster) + fs_manager.superbloco.DataSectorStart;
     DWORD lastSector = sector + fs_manager.superbloco.SectorsPerCluster - 1;
-//    BYTE* data = (BYTE*) malloc(SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
-    BYTE* buffer = (BYTE*) malloc(SECTOR_SIZE);
+    BYTE* buffer = malloc(SECTOR_SIZE);
 
     for(sector; sector <= lastSector; ++sector){
         if (read_sector(sector, buffer)){
@@ -144,11 +143,9 @@ int readClusterData(DWORD cluster, BYTE* data) {
     return 0;
 }
 
-int readFATEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
-//     int sizeInSectors = sizeInBytes / SECTOR_SIZE + (sizeInBytes % SECTOR_SIZE == 0 ? 0 : 1); //talvez esse +1 dê problema
-//    BYTE* data = (BYTE*) malloc(sizeInBytes);
-    BYTE* buffer = (BYTE*) malloc(SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
-    DWORD* fatPointer = (DWORD) malloc(sizeof(DWORD));
+int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
+    BYTE* buffer = malloc(SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
+    DWORD* fatPointer = malloc(sizeof(DWORD));
 
     do {
         memcpy(fatPointer,fs_manager.fat.data + (cluster * sizeof(DWORD)), sizeof(DWORD));
@@ -159,7 +156,7 @@ int readFATEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
             return -1;
         }
 
-        memcpy(data, buffer, sizeof(buffer));
+        memcpy(data + (cluster * (SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster)), buffer, sizeof(buffer));
 
         cluster = *fatPointer;
     } while(*fatPointer != 0xFFFFFFFF);
