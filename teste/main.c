@@ -16,6 +16,7 @@ int main() {
 
     BYTE* data = malloc(1024);
     readEntry(0,1024,data);
+    printf("corno");
 
     return 0;
 }
