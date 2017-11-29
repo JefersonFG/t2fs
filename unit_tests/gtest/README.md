@@ -57,7 +57,7 @@ the following notable projects:
   * The [Chromium projects](http://www.chromium.org/) (behind the Chrome
     browser and Chrome OS).
   * The [LLVM](http://llvm.org/) compiler.
-  * [Protocol Buffers](https://github.com/google/protobuf), Google's data
+  * [Protocol Buffers](https://github.com/google/protobuf), Google's sectors
     interchange format.
   * The [OpenCV](http://opencv.org/) computer vision library.
   * [tiny-dnn](https://github.com/tiny-dnn/tiny-dnn): header only, dependency-free deep learning framework in C++11.

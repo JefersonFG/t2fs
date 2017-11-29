@@ -90,4 +90,4 @@ The Debugger has exited with status 0.
 
 # Summary #
 
-Unit testing is a valuable way to ensure your data model stays valid even during rapid development or refactoring. The Google Testing Framework is a great unit testing framework for C and C++ which integrates well with an Xcode development environment.
+Unit testing is a valuable way to ensure your sectors model stays valid even during rapid development or refactoring. The Google Testing Framework is a great unit testing framework for C and C++ which integrates well with an Xcode development environment.

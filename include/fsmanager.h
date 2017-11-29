@@ -27,22 +27,31 @@ typedef struct {
     char name[MAX_FILE_NAME_SIZE];
 } T_OpenDir;
 
+#define RECORD_SIZE 64
+
+#define FAT_FREE_CLUSTER 0x00000000
+#define FAT_INVALID 0x00000001
+#define FAT_BAD_SECTOR 0xFFFFFFFE
+#define FAT_EOF 0xFFFFFFFF
+
+struct t2fs_record root;
+
 struct t2fs_fat {
-    char *data;
+    unsigned char *sectors;
     unsigned int num_setores;
     unsigned int num_clusters;
 };
 
-struct t2fs_manager {
+struct {
     struct t2fs_superbloco superbloco;
     struct t2fs_fat fat;
     T_OpenFile openFiles[MAX_OPEN_FILES];
     T_OpenDir openDirectories[MAX_OPEN_DIRS];
     int numOpenFiles;
     int numOpenDirectories;
-};
-
-static struct t2fs_manager fs_manager;
+    struct t2fs_record *diretorio_atual;
+    struct t2fs_record *entradas_diretorio_atual;
+} fs_manager;
 
 
 /**
