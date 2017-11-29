@@ -10,7 +10,7 @@
 "Luis Miguel Santos Batista - 265037\nVinicius Chagas Soares - 262510\n"
 
 int identify2 (char *name, int size) {
-    int tamanho_identificacao = strlen(IDENTIFICACAO_GRUPO);
+    int tamanho_identificacao = (int) strlen(IDENTIFICACAO_GRUPO);
 
     if (size < tamanho_identificacao)
         return -1;
@@ -42,7 +42,7 @@ FILE2 open2 (char *filename) {
     handle = getNewHandle(TYPEVAL_REGULAR);
     if (handle == NULL) return -1;
 
-    fs_manager.openFiles[handle] = openFile(parentDir, name);
+//    fs_manager.openFiles[handle] = openFile(parentDir, name);
     return -1;
 }
 

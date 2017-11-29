@@ -38,9 +38,9 @@ char *getFileName(char *filename) {
 //TODO: IMPLEMENTAR FINDRECORD
 struct t2fs_record* findRecord(DWORD cluster, char* name, DWORD entry);
 
-T_OpenFile getFile(DWORD fatherReg, char *name){
+T_OpenFile getFile(DWORD cluster, char *name){
     T_OpenFile file;
-    struct t2fs_record *record = findRecord(fatherReg, name, -1);
+    struct t2fs_record *record = findRecord(cluster, name, -1);
     if(record == NULL || record->TypeVal != TYPEVAL_REGULAR){
         file.valid = -1;
     }
@@ -50,7 +50,7 @@ T_OpenFile getFile(DWORD fatherReg, char *name){
 //        file.numBlocks = record->blocksFileSize;
         file.byteSize = record->bytesFileSize;
         file.firstCluster = record->firstCluster;
-//        file.fatherMFT = fatherReg;
+//        file.fatherMFT = cluster;
         strcpy(file.name, record->name);
     }
     return file;

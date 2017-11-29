@@ -52,4 +52,21 @@ static struct t2fs_manager fs_manager;
  */
 int init_manager();
 
+/**
+ * Lê os dados do cluster requisitado.
+ * @param cluster Cluster a ser lido
+ * @param data Ponteiro para área de memória a ser preenchida com os dados
+ * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
+ */
+int readClusterData(DWORD cluster, BYTE* data);
+
+/**
+ * Lê os dados de uma entrada da FAT.
+ * @param cluster Primeiro cluster a ser lido
+ * @param sizeInBytes Tamanho do arquivo em bytes
+ * @param data Ponteiro para área de memória a ser preenchida com os dados
+ * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
+ */
+int readFATEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data);
+
 #endif //T2FS_FSMANAGER_H
