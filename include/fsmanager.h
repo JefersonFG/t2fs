@@ -15,17 +15,20 @@
 #define FAT_BAD_SECTOR 0xFFFFFFFE
 #define FAT_EOF 0xFFFFFFFF
 
+struct t2fs_record root;
+
 struct t2fs_fat {
-    unsigned char *data;
+    unsigned char *sectors;
     unsigned int num_setores;
     unsigned int num_clusters;
 };
 
-struct t2fs_manager {
+struct {
     struct t2fs_superbloco superbloco;
     struct t2fs_fat fat;
     struct t2fs_record *diretorio_atual;
-};
+    struct t2fs_record *entradas_diretorio_atual;
+} fs_manager;
 
 /**
  * Inicializa o gerenciador do sistema de arquivos, garantindo que a inicialização

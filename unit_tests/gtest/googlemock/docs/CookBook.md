@@ -2006,12 +2006,12 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 
-int Process(const MyData& data);
+int Process(const MyData& sectors);
 string DoSomething();
 
 class MockFoo : public Foo {
  public:
-  MOCK_METHOD1(Abc, void(const MyData& data));
+  MOCK_METHOD1(Abc, void(const MyData& sectors));
   MOCK_METHOD0(Xyz, bool());
 };
 ...
