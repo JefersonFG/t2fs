@@ -136,7 +136,7 @@ int readClusterData(DWORD cluster, BYTE* data) {
             return -1;
         }
 
-        memcpy(data, buffer, SECTOR_SIZE);
+        memcpy(data + (sector * SECTOR_SIZE), buffer, SECTOR_SIZE);
     }
 
     return 0;
@@ -158,7 +158,7 @@ int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
         memcpy(data + (cluster * (SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster)), buffer, sizeof(buffer));
 
         cluster = *fatPointer;
-    } while(*fatPointer != 0xFFFFFFFF);
+    } while(*fatPointer != 0xFFFFFFFF || *fatPointer != 0xFFFFFFFE || *fatPointer != 0x00000001);
 
     return 0;
 }

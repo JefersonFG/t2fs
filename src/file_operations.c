@@ -38,18 +38,18 @@ char *getFileName(char *filename) {
 //TODO: IMPLEMENTAR FINDRECORD
 struct t2fs_record* findRecord(DWORD cluster, char* name, DWORD entry);
 
-T_OpenFile getFile(DWORD cluster, char *name){
-    T_OpenFile file;
-    struct t2fs_record *record = findRecord(cluster, name, -1);
-    if(record == NULL || record->TypeVal != TYPEVAL_REGULAR){
-        file.valid = -1;
-    }
-    else {
-        file.valid = 1;
-        file.curPointer = 0;
-        file.byteSize = record->bytesFileSize;
-        file.firstCluster = record->firstCluster;
-        strcpy(file.name, record->name);
-    }
-    return file;
-}
+//T_OpenFile getFile(DWORD cluster, char *name){
+//    T_OpenFile file;
+//    struct t2fs_record *record = findRecord(cluster, name, -1);
+//    if(record == NULL || record->TypeVal != TYPEVAL_REGULAR){
+//        file.valid = -1;
+//    }
+//    else {
+//        file.valid = 1;
+//        file.curPointer = 0;
+//        file.byteSize = record->bytesFileSize;
+//        file.firstCluster = record->firstCluster;
+//        strcpy(file.name, record->name);
+//    }
+//    return file;
+//}
