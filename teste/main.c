@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fsmanager.h>
 #include "../include/t2fs.h"
 #include "../include/fsmanager.h"
 
@@ -15,8 +16,8 @@ int main() {
     identify2(identification, IDENTIFICATION_SIZE);
     puts(identification);
 
-    BYTE* data = malloc(1024);
-    readEntry(64,1024,data);
+    BYTE* data = malloc(65532);
+    readEntry(fs_manager.superbloco.RootDirCluster,65532,data);
     printf("corno");
 
     return 0;
