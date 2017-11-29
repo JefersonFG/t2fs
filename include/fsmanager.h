@@ -8,8 +8,15 @@
 
 #include "t2fs.h"
 
+#define RECORD_SIZE 64
+
+#define FAT_FREE_CLUSTER 0x00000000
+#define FAT_INVALID 0x00000001
+#define FAT_BAD_SECTOR 0xFFFFFFFE
+#define FAT_EOF 0xFFFFFFFF
+
 struct t2fs_fat {
-    char *data;
+    unsigned char *data;
     unsigned int num_setores;
     unsigned int num_clusters;
 };
@@ -17,6 +24,7 @@ struct t2fs_fat {
 struct t2fs_manager {
     struct t2fs_superbloco superbloco;
     struct t2fs_fat fat;
+    struct t2fs_record *diretorio_atual;
 };
 
 /**

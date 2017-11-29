@@ -7,7 +7,8 @@
 int main() {
     char identification[IDENTIFICATION_SIZE];
 
-    init_manager();
+    if (init_manager() < 0)
+        puts("Erro na inicialização!\n");
 
     printf("Identificacao do grupo:\n");
     identify2(identification, IDENTIFICATION_SIZE);
