@@ -2,7 +2,7 @@ Goal:
 -----
   CppClean attempts to find problems in C++ source that slow development
   in large code bases, for example various forms of unused code.
-  Unused code can be unused functions, methods, data members, types, etc
+  Unused code can be unused functions, methods, sectors members, types, etc
   to unnecessary #include directives.  Unnecessary #includes can cause
   considerable extra compiles increasing the edit-compile-run cycle.
 
@@ -13,7 +13,7 @@ Features:
 ---------
  * Find and print C++ language constructs: classes, methods, functions, etc.
  * Find classes with virtual methods, no virtual destructor, and no bases
- * Find global/static data that are potential problems when using threads
+ * Find global/static sectors that are potential problems when using threads
  * Unnecessary forward class declarations
  * Unnecessary function declarations
  * Undeclared function definitions
@@ -22,7 +22,7 @@ Features:
    - Header is unnecessary if classes were forward declared instead
  * (planned) Source files that reference headers not directly #included,
    ie, files that rely on a transitive #include from another header
- * (planned) Unused members (private, protected, & public) methods and data
+ * (planned) Unused members (private, protected, & public) methods and sectors
  * (planned) Store AST in a SQL database so relationships can be queried
 
 AST is Abstract Syntax Tree, a representation of parsed source code.

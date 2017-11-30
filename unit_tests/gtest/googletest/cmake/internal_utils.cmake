@@ -27,7 +27,7 @@ macro(fix_default_compiler_settings_)
       if (NOT BUILD_SHARED_LIBS AND NOT gtest_force_shared_crt)
         # When Google Test is built as a shared library, it should also use
         # shared runtime libraries.  Otherwise, it may end up with multiple
-        # copies of runtime library data in different modules, resulting in
+        # copies of runtime library sectors in different modules, resulting in
         # hard-to-find crashes. When it is built as a static library, it is
         # preferable to use CRT as static libraries, as we don't have to rely
         # on CRT DLLs being available. CMake always defaults to using shared
@@ -86,10 +86,6 @@ macro(config_compiler_and_linker)
       # Suppress "unreachable code" warning on VS 2012 and later.
       # http://stackoverflow.com/questions/3232669 explains the issue.
       set(cxx_base_flags "${cxx_base_flags} -wd4702")
-    endif()
-    if (NOT (MSVC_VERSION GREATER 1900))  # 1900 is Visual Studio 2015
-      # BigObj required for tests.
-      set(cxx_base_flags "${cxx_base_flags} -bigobj")
     endif()
 
     set(cxx_base_flags "${cxx_base_flags} -D_UNICODE -DUNICODE -DWIN32 -D_WIN32")
@@ -187,6 +183,10 @@ endfunction()
 # is built from the given source files with the given compiler flags.
 function(cxx_executable_with_flags name cxx_flags libs)
   add_executable(${name} ${ARGN})
+  if (MSVC AND (NOT (MSVC_VERSION LESS 1700)))  # 1700 is Visual Studio 2012.
+    # BigObj required for tests.
+    set(cxx_flags "${cxx_flags} -bigobj")
+  endif()
   if (cxx_flags)
     set_target_properties(${name}
       PROPERTIES

@@ -280,7 +280,7 @@ In the end, it probably doesn't matter much either way.
 
 ## Why don't we use structs as test fixtures? ##
 
-We like to use structs only when representing passive data.  This
+We like to use structs only when representing passive sectors.  This
 distinction between structs and classes is good for documenting the
 intent of the code's author.  Since test fixtures have logic like
 `SetUp()` and `TearDown()`, they are better defined as classes.
@@ -333,7 +333,7 @@ as running in a parallel universe, more or less.
 
 ## The compiler complains about "undefined references" to some static const member variables, but I did define them in the class body. What's wrong? ##
 
-If your class has a static data member:
+If your class has a static sectors member:
 
 ``` cpp
 // foo.h
@@ -356,7 +356,7 @@ will generate an "undefined reference" linker error.
 ## I have an interface that has several implementations. Can I write a set of tests once and repeat them over all the implementations? ##
 
 Google Test doesn't yet have good support for this kind of tests, or
-data-driven tests in general. We hope to be able to make improvements in this
+sectors-driven tests in general. We hope to be able to make improvements in this
 area soon.
 
 ## Can I derive a test fixture from another? ##
@@ -494,7 +494,7 @@ EXPECT_PRED1(IsPositive, 5);
 However, this will work:
 
 ``` cpp
-EXPECT_PRED1(*static_cast<bool (*)(int)>*(IsPositive), 5);
+EXPECT_PRED1(static_cast<bool (*)(int)>(IsPositive), 5);
 ```
 
 (The stuff inside the angled brackets for the `static_cast` operator is the
@@ -512,14 +512,14 @@ bool IsNegative(T x) {
 you can use it in a predicate assertion like this:
 
 ``` cpp
-ASSERT_PRED1(IsNegative*<int>*, -5);
+ASSERT_PRED1(IsNegative<int>, -5);
 ```
 
 Things are more interesting if your template has more than one parameters. The
 following won't compile:
 
 ``` cpp
-ASSERT_PRED2(*GreaterThan<int, int>*, 5, 0);
+ASSERT_PRED2(GreaterThan<int, int>, 5, 0);
 ```
 
 
@@ -528,7 +528,7 @@ which is one more than expected. The workaround is to wrap the predicate
 function in parentheses:
 
 ``` cpp
-ASSERT_PRED2(*(GreaterThan<int, int>)*, 5, 0);
+ASSERT_PRED2((GreaterThan<int, int>), 5, 0);
 ```
 
 
@@ -857,7 +857,7 @@ Google Test needs to be able to create objects of your test fixture class, so
 it must have a default constructor. Normally the compiler will define one for
 you. However, there are cases where you have to define your own:
   * If you explicitly declare a non-default constructor for class `Foo`, then you need to define a default constructor, even if it would be empty.
-  * If `Foo` has a const non-static data member, then you have to define the default constructor _and_ initialize the const member in the initializer list of the constructor. (Early versions of `gcc` doesn't force you to initialize the const member. It's a bug that has been fixed in `gcc 4`.)
+  * If `Foo` has a const non-static sectors member, then you have to define the default constructor _and_ initialize the const member in the initializer list of the constructor. (Early versions of `gcc` doesn't force you to initialize the const member. It's a bug that has been fixed in `gcc 4`.)
 
 ## Why does ASSERT\_DEATH complain about previous threads that were already joined? ##
 

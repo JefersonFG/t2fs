@@ -56,7 +56,7 @@ namespace internal {
 class IgnoredValue {
  public:
   // This constructor template allows any value to be implicitly
-  // converted to IgnoredValue.  The object has no data member and
+  // converted to IgnoredValue.  The object has no sectors member and
   // doesn't try to remember anything about the argument.  We
   // deliberately omit the 'explicit' keyword in order to allow the
   // conversion to be implicit.

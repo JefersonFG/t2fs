@@ -1140,7 +1140,7 @@ Value-parameterized tests will let you write your test only once and then easily
 Here are some other situations when value-parameterized tests come handy:
 
   * You want to test different implementations of an OO interface.
-  * You want to test your code over various inputs (a.k.a. data-driven testing). This feature is easy to abuse, so please exercise your good sense when doing it!
+  * You want to test your code over various inputs (a.k.a. sectors-driven testing). This feature is easy to abuse, so please exercise your good sense when doing it!
 
 ## How to Write Value-Parameterized Tests ##
 
