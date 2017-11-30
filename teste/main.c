@@ -14,5 +14,8 @@ int main() {
     identify2(identification, IDENTIFICATION_SIZE);
     puts(identification);
 
+    //if (mkdir2("testdir") < 0)
+    //    puts("Erro ao criar um novo diretório");
+
     return 0;
 }

@@ -17,6 +17,8 @@
 
 struct t2fs_record root;
 
+unsigned int directory_max_entries;
+
 struct t2fs_fat {
     unsigned char *sectors;
     unsigned int num_setores;
@@ -36,5 +38,17 @@ struct {
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
 int init_manager();
+
+/**
+ * Busca e retorna um cluster livre na fat.
+ * @return Se obteve sucesso retorna o índice do cluster livre, caso contrário retorna um valor negativo.
+ */
+int get_free_cluster();
+
+/**
+ * Escreve a fat no disco.
+ * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
+ */
+int write_fat();
 
 #endif //T2FS_FSMANAGER_H

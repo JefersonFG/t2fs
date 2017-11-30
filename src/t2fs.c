@@ -3,6 +3,9 @@
  */
 
 #include <string.h>
+#include <file_operations.h>
+#include <stdio.h>
+#include <fsmanager.h>
 #include "../include/t2fs.h"
 #include "../include/fsmanager.h"
 
@@ -61,7 +64,48 @@ int seek2 (FILE2 handle, unsigned int offset) {
 }
 
 int mkdir2 (char *pathname) {
-    //TODO - Implementar mkdir2
+    if (init_manager() < 0)
+        return -1;
+
+    char path_before_new_dir[strlen(pathname)];
+    char *last_separator;
+    char *directory_name;
+    char separator = '/';
+
+    struct t2fs_record father_list;
+
+    strcpy(path_before_new_dir, pathname);
+    last_separator = strrchr(path_before_new_dir, separator);
+
+    // TODO Verificar se o arquivo existe antes de criar!
+
+    if (last_separator != NULL)
+        directory_name = last_separator + 1;
+    else
+        directory_name = pathname;
+
+
+    if (last_separator == NULL) {
+        /// Insere novo subdiretório no diretório atual
+        if (create_dir(directory_name, fs_manager.diretorio_atual, fs_manager.entradas_diretorio_atual) < 0)
+            return -1;
+    } else if (strcmp(pathname, last_separator) == 0) {
+        /// Insere novo diretório no root
+        if (get_directory_entries(&root, &father_list) < 0)
+            return -1;
+        if (create_dir(directory_name, &root, &father_list) < 0)
+            return -1;
+    } else {
+        *last_separator = '\0';
+
+        if (get_father_dir(path_before_new_dir, &father_list) < 0) {
+            perror("Caminho inválido");
+            return -1;
+        }
+
+        // TODO Criar e inserir diretório na lista do registro pai
+    }
+
     return -1;
 }
 
