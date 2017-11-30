@@ -9,6 +9,20 @@
 #include "t2fs.h"
 #include "file_operations.h"
 
+#define RECORD_SIZE 64
+
+#define FAT_FREE_CLUSTER 0x00000000
+#define FAT_INVALID 0x00000001
+#define FAT_BAD_SECTOR 0xFFFFFFFE
+#define FAT_EOF 0xFFFFFFFF
+
+#define MAX_OPEN_FILES 10
+#define MAX_OPEN_DIRS 10
+
+struct t2fs_record root;
+
+unsigned int directory_max_entries;
+
 typedef struct {
     int valid;
     DWORD firstCluster;
@@ -26,17 +40,6 @@ typedef struct {
     DWORD byteSize;
     char name[MAX_FILE_NAME_SIZE];
 } T_OpenDir;
-
-#define RECORD_SIZE 64
-
-#define FAT_FREE_CLUSTER 0x00000000
-#define FAT_INVALID 0x00000001
-#define FAT_BAD_SECTOR 0xFFFFFFFE
-#define FAT_EOF 0xFFFFFFFF
-
-struct t2fs_record root;
-
-unsigned int directory_max_entries;
 
 struct t2fs_fat {
     unsigned char *sectors;

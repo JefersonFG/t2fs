@@ -34,13 +34,6 @@ int get_father_dir(char *pathname, struct t2fs_record* entradas_diretorio_pai);
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
 int create_dir(char *nome_diretorio, struct t2fs_record *diretorio_pai, struct t2fs_record *entradas_diretorio_pai);
-//#define FILE_HANDLE 1
-//#define DIR_HANDLE 2
-
-#define MAX_OPEN_FILES 10
-#define MAX_OPEN_DIRS 25 //foda-se
-
-//TODO Adicionar funções de manipulação de arquivos e diretórios.
 
 /**
  * Gera um novo Handle do tipo desejado, contanto que o limite de
@@ -50,6 +43,7 @@ int create_dir(char *nome_diretorio, struct t2fs_record *diretorio_pai, struct t
  * @return -1 em caso de erro; o Handle criado caso execute corretamente
  */
 FILE2 getNewHandle(int type);
+
 char* getFileName(char *filename);
 
 #endif //T2FS_FILE_OPERATIONS_H

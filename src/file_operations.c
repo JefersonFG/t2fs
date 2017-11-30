@@ -110,7 +110,7 @@ int create_dir(char *nome_diretorio, struct t2fs_record *diretorio_pai, struct t
 
     // TODO Adicionar na lista de entradas do diretório pai
 }
-//TODO Adicionar funções de manipulação de arquivos e diretórios.
+
 FILE2 getNewHandle(int type) {
     FILE2 handle;
     switch(type){

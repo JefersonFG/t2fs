@@ -7,9 +7,7 @@
 #include <string.h>
 #include <fsmanager.h>
 
-#include "../include/t2fs.h"
 #include "../include/apidisk.h"
-#include "../include/fsmanager.h"
 
 #define MANAGER_INITIALIZED 1
 #define MANAGER_NOT_INITIALIZED 0
@@ -27,12 +25,6 @@ int init_fat();
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
 int read_fat();
-
-/**
- * Escreve a fat no disco.
- * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
- */
-int write_fat();
 
 /**
  * Inicializa o diretório de root lendo-o do disco ou criando-o e o escrevendo no disco.
@@ -74,10 +66,6 @@ int init_manager() {
         isInitialized = MANAGER_INITIALIZED;
 
         free(buffer);
-
-        puts("Teste conteúdo root:");
-        puts(fs_manager.entradas_diretorio_atual[0].name);
-        puts(fs_manager.entradas_diretorio_atual[1].name);
 
         return 0;
     }
@@ -149,8 +137,6 @@ int init_root_directory() {
     fs_manager.entradas_diretorio_atual = calloc(fs_manager.superbloco.SectorsPerCluster, SECTOR_SIZE);
 
     if (*cluster != FAT_EOF) {
-        puts("Criando root\n");
-
         root.TypeVal = TYPEVAL_DIRETORIO;
         strcpy(root.name, "/");
         root.bytesFileSize = 0;
