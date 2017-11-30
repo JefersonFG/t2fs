@@ -16,6 +16,9 @@ int main() {
     identify2(identification, IDENTIFICATION_SIZE);
     puts(identification);
 
+    //if (mkdir2("testdir") < 0)
+    //    puts("Erro ao criar um novo diretório");
+
     BYTE* data = malloc(65532);
     readEntry(fs_manager.superbloco.RootDirCluster,data);
     printf("corno");

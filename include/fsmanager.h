@@ -36,6 +36,8 @@ typedef struct {
 
 struct t2fs_record root;
 
+unsigned int directory_max_entries;
+
 struct t2fs_fat {
     unsigned char *sectors;
     unsigned int num_setores;
@@ -53,13 +55,24 @@ struct {
     struct t2fs_record *entradas_diretorio_atual;
 } fs_manager;
 
-
 /**
  * Inicializa o gerenciador do sistema de arquivos, garantindo que a inicialização
  * só execute uma vez mesmo se a função for chamada mais de uma vez.
  * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
  */
 int init_manager();
+
+/**
+ * Busca e retorna um cluster livre na fat.
+ * @return Se obteve sucesso retorna o índice do cluster livre, caso contrário retorna um valor negativo.
+ */
+int get_free_cluster();
+
+/**
+ * Escreve a fat no disco.
+ * @return Se obteve sucesso retorna 0, caso contrário retorna um valor negativo.
+ */
+int write_fat();
 
 /**
  * Lê os dados do cluster requisitado.

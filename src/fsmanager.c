@@ -11,8 +11,6 @@
 #include "../include/apidisk.h"
 #include "../include/fsmanager.h"
 
-unsigned int directory_max_entries;
-
 #define MANAGER_INITIALIZED 1
 #define MANAGER_NOT_INITIALIZED 0
 
@@ -202,8 +200,6 @@ int init_root_directory() {
         }
 
     } else {
-        puts("Lendo root");
-
         unsigned int i, j;
         root_sector += fs_manager.superbloco.DataSectorStart;
 
@@ -225,6 +221,25 @@ int init_root_directory() {
     free(buffer);
 
     return 0;
+}
+
+int get_free_cluster() {
+    long int *cluster = malloc(SECTOR_SIZE*fs_manager.superbloco.SectorsPerCluster);
+    unsigned int i;
+
+    for (i = 0; i < fs_manager.fat.num_clusters; i += fs_manager.superbloco.SectorsPerCluster) {
+        memcpy(cluster, &fs_manager.fat.sectors[i], SECTOR_SIZE*fs_manager.superbloco.SectorsPerCluster);
+
+        if (*cluster == FAT_FREE_CLUSTER) {
+            free(cluster);
+            return i;
+        }
+    }
+
+    /// Sem clusters livres
+    perror("Não há mais clusters livres");
+    free(cluster);
+    return -1;
 }
 
 int readClusterData(int cluster, BYTE* data) {
