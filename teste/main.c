@@ -17,7 +17,7 @@ int main() {
     puts(identification);
 
     BYTE* data = malloc(65532);
-    readEntry(fs_manager.superbloco.RootDirCluster,65532,data);
+    readEntry(fs_manager.superbloco.RootDirCluster,data);
     printf("corno");
 
     return 0;

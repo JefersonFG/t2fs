@@ -227,26 +227,8 @@ int init_root_directory() {
     return 0;
 }
 
-//TODO: Ver se isso faz algum sentido
-int readClusterData(DWORD cluster, BYTE* data) {
-//    DWORD sector = cluster * (fs_manager.superbloco.SectorsPerCluster) + fs_manager.superbloco.DataSectorStart;
-//    DWORD lastSector = sector + fs_manager.superbloco.SectorsPerCluster - 1;
+int readClusterData(int cluster, BYTE* data) {
     BYTE* buffer = malloc(SECTOR_SIZE);
-//
-//    int i;
-//
-//    for(sector, i = 0; sector <= lastSector; ++sector, ++i){
-//        if (read_sector(sector, buffer)){
-//            perror("Erro ao ler o setor!\n");
-//            free(buffer);
-//            return -1;
-//        }
-//
-//        memcpy(data + (i * SECTOR_SIZE), buffer, SECTOR_SIZE);
-//    }
-//
-//    return 0;
-
     unsigned int i, j;
     DWORD sector = cluster * fs_manager.superbloco.SectorsPerCluster + fs_manager.superbloco.DataSectorStart;
 
@@ -267,20 +249,29 @@ int readClusterData(DWORD cluster, BYTE* data) {
         }
     }
 
+    free(buffer);
+
     return 0;
 }
 
-int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
+int readEntry(int cluster, BYTE* data) {
     BYTE* buffer = malloc(SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
-    DWORD* fatPointer = malloc(sizeof(DWORD));
+    long int* fatPointer = malloc(sizeof(long int));
     int i = 0;
 
     do {
         memcpy(fatPointer,&fs_manager.fat.sectors[cluster], sizeof(DWORD));
 
+        if (*fatPointer == FAT_BAD_SECTOR || *fatPointer == FAT_INVALID){
+            perror("Entrada FAT inválida.");
+            free(buffer);
+            free(fatPointer);
+            return -1;
+        }
         if (readClusterData(cluster, buffer)){
             printf("Erro ao ler o cluster %d\n",cluster);
             free(buffer);
+            free(fatPointer);
             return -1;
         }
 
@@ -288,7 +279,10 @@ int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
 
         cluster = *fatPointer;
         ++i;
-    } while(*fatPointer != FAT_EOF || *fatPointer != FAT_BAD_SECTOR || *fatPointer != FAT_INVALID || *fatPointer != FAT_FREE_CLUSTER);
+    } while(*fatPointer != FAT_EOF);
+
+    free(buffer);
+    free(fatPointer);
 
     return 0;
 }
