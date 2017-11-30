@@ -229,20 +229,42 @@ int init_root_directory() {
 
 //TODO: Ver se isso faz algum sentido
 int readClusterData(DWORD cluster, BYTE* data) {
-    DWORD sector = cluster * (fs_manager.superbloco.SectorsPerCluster) + fs_manager.superbloco.DataSectorStart;
-    DWORD lastSector = sector + fs_manager.superbloco.SectorsPerCluster - 1;
+//    DWORD sector = cluster * (fs_manager.superbloco.SectorsPerCluster) + fs_manager.superbloco.DataSectorStart;
+//    DWORD lastSector = sector + fs_manager.superbloco.SectorsPerCluster - 1;
     BYTE* buffer = malloc(SECTOR_SIZE);
+//
+//    int i;
+//
+//    for(sector, i = 0; sector <= lastSector; ++sector, ++i){
+//        if (read_sector(sector, buffer)){
+//            perror("Erro ao ler o setor!\n");
+//            free(buffer);
+//            return -1;
+//        }
+//
+//        memcpy(data + (i * SECTOR_SIZE), buffer, SECTOR_SIZE);
+//    }
+//
+//    return 0;
 
-    int i;
+    unsigned int i, j;
+    DWORD sector = cluster * fs_manager.superbloco.SectorsPerCluster + fs_manager.superbloco.DataSectorStart;
 
-    for(sector, i = 0; sector <= lastSector; ++sector, ++i){
-        if (read_sector(sector, buffer)){
-            perror("Erro ao ler o setor!\n");
-            free(buffer);
-            return -1;
+    if (cluster < 2){
+        perror("Acesso a cluster inválido.");
+        return -1;
+    }
+    else{
+        for (i = sector, j = 0; j < fs_manager.superbloco.SectorsPerCluster; i += SECTOR_SIZE, j++) {
+            if (read_sector(i, buffer) != 0) {
+                perror("Erro na leitura do setor.");
+                free(data);
+                free(buffer);
+                return -1;
+            }
+
+            memcpy(data + SECTOR_SIZE * j, buffer, SECTOR_SIZE);
         }
-
-        memcpy(data + (i * SECTOR_SIZE), buffer, SECTOR_SIZE);
     }
 
     return 0;
@@ -254,19 +276,19 @@ int readEntry(DWORD cluster, DWORD sizeInBytes, BYTE* data) {
     int i = 0;
 
     do {
-        memcpy(fatPointer,fs_manager.fat.sectors + (cluster - 1 * sizeof(DWORD)), sizeof(DWORD));
+        memcpy(fatPointer,&fs_manager.fat.sectors[cluster], sizeof(DWORD));
 
-        if (readClusterData(cluster - 1, buffer)){
+        if (readClusterData(cluster, buffer)){
             printf("Erro ao ler o cluster %d\n",cluster);
             free(buffer);
             return -1;
         }
 
-        memcpy(data + (i * (SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster)), buffer, sizeof(buffer));
+        memcpy(data + (i * (SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster)), buffer, SECTOR_SIZE * fs_manager.superbloco.SectorsPerCluster);
 
         cluster = *fatPointer;
         ++i;
-    } while(*fatPointer != 0xFFFFFFFF || *fatPointer != 0xFFFFFFFE || *fatPointer != 0x00000001 || *fatPointer != 0x00000000);
+    } while(*fatPointer != FAT_EOF || *fatPointer != FAT_BAD_SECTOR || *fatPointer != FAT_INVALID || *fatPointer != FAT_FREE_CLUSTER);
 
     return 0;
 }
